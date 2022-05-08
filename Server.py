@@ -28,6 +28,10 @@ client_socket, address = s.accept()
 # Read whatever the client sends
 message = client_socket.recv(BUFFER_SIZE).decode()
 
+#
+#   CIFRAR EL ARCHIVO CON CHACHA20
+#
+
 # Encriptar el mensaje que nos ha enviado el cliente
 # llave
 chacha20_key = nacl.utils.random()
@@ -43,6 +47,10 @@ texto_encriptado = chachaCipher.encrypt(mensaje_a_bytes)
 
 print(f"Texto encriptado por Chacha20: \n {texto_encriptado}\n")
 
+
+#
+#   FIRMAR EL ARCHIVO CIFRADO 
+#
 # Crear la llave para firmar
 signing_key = SigningKey.generate()
 
@@ -54,8 +62,6 @@ verify_key = signing_key.verify_key
 
 # Serializar la llave para enviarla
 verify_key_bytes = verify_key.encode()
-
-print(f"Verify_key_bytes: {verify_key_bytes}\n")
 
 print(f"Texto firmado y encriptado por Chacha20: \n {mensaje_firmado}\n")
 
